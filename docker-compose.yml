@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  game-library-api:
+    build:
+      context: .
+      args:
+        - NODE_ENV=development
+    networks: 
+      - api-database
+    ports: 
+      - "3001:3000"
+    volumes: 
+      - ./:/var/www/node-api/game-library-api
+    depends_on:
+      game-library-database:
+        condition: service_healthy
+
+  game-library-database:
+    image: mysql:latest
+    networks: 
+      - api-database
+      - adminer-database
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  adminer:
+    image: adminer
+    networks:
+      - adminer-database
+    environment:
+      ADMINER_DEFAULT_SERVER: game-library-database
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - game-library-database
+
+networks:
+    api-database:
+    adminer-database:
