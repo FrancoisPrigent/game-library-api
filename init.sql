@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS game
   title         VARCHAR(100)  NOT NULL,
   price         INT           NOT NULL,
   publisher_id  BIGINT        UNSIGNED    NOT NULL,
-  releaseDate   TIMESTAMP     NOT NULL,
+  release_date   TIMESTAMP     NOT NULL,
 
   PRIMARY KEY (id),
   FOREIGN KEY (publisher_id) REFERENCES publisher(id)
@@ -52,7 +52,7 @@ VALUES
   ('riot', 88888, '0202020202');
 
 INSERT INTO game
-  (title, price, publisher_id, releaseDate)
+  (title, price, publisher_id, release_date)
 VALUES
   ('overwatch', 50, 1, '2021-01-01 00:00:01'),
   ('league of legends', 100, 2, '2021-02-01 00:00:01');
