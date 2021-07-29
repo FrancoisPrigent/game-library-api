@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { Game } from './entities/game.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { classToPlain } from 'class-transformer';
 
 @Injectable()
 export class GamesService {
@@ -15,7 +14,7 @@ export class GamesService {
     return await this.gameRepository.find({ relations: ['publisher'] });
   }
 
-  async findOne(id: string): Promise<Game> {
+  async findOne(id: number): Promise<Game> {
     return await this.gameRepository.findOne(id, { relations: ['publisher'] });
   }
 }

@@ -27,7 +27,7 @@ export class GamesController {
   @SerializeOptions({
     groups: [GROUP_GAME],
   })
-  async findGame(@Param('id') id: string): Promise<Game> {
+  async findGame(@Param('id') id: number): Promise<Game> {
     return this.gamesService.findOne(id);
   }
 
@@ -35,7 +35,7 @@ export class GamesController {
   @SerializeOptions({
     groups: [GROUP_PUBLISHER],
   })
-  async findGamePublisher(@Param('id') id: string): Promise<Game> {
+  async findGamePublisher(@Param('id') id: number): Promise<Game> {
     return this.gamesService.findOne(id);
   }
 }
