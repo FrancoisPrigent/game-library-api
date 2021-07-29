@@ -5,10 +5,13 @@ import {
   UseInterceptors,
   SerializeOptions,
   Param,
+  Post,
+  Body,
 } from '@nestjs/common';
 import { Game } from './entities/game.entity';
 import { GamesService } from './games.service';
 import { GROUP_GAME, GROUP_PUBLISHER } from './entities/game.entity';
+import { CreateGameDto } from './dto/create-game.dto';
 
 @Controller('games')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -37,5 +40,10 @@ export class GamesController {
   })
   async findGamePublisher(@Param('id') id: number): Promise<Game> {
     return this.gamesService.findOne(id);
+  }
+
+  @Post()
+  async createGame(@Body() createGameDto: CreateGameDto): Promise<Game> {
+    return this.gamesService.insert(createGameDto);
   }
 }

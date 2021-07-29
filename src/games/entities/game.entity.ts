@@ -8,7 +8,7 @@ export const GROUP_PUBLISHER = 'group_publisher';
 @Entity()
 export class Game {
   @Expose({ groups: [GROUP_GAME] })
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Expose({ groups: [GROUP_GAME] })
@@ -24,6 +24,6 @@ export class Game {
   releaseDate: string;
 
   @Expose({ groups: [GROUP_GAME, GROUP_PUBLISHER] })
-  @ManyToOne(() => Publisher, (publisher) => publisher.games)
+  @ManyToOne(() => Publisher, (publisher) => publisher.games, { cascade: true })
   publisher: Publisher;
 }
