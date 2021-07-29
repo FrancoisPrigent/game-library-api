@@ -16,11 +16,11 @@ CREATE TABLE IF NOT EXISTS game
   id            SERIAL,
   title         VARCHAR(100)  NOT NULL,
   price         INT           NOT NULL,
-  publisher_id  BIGINT        UNSIGNED    NOT NULL,
-  release_date   TIMESTAMP     NOT NULL,
+  publisherId  BIGINT        UNSIGNED    NOT NULL,
+  releaseDate   TIMESTAMP     NOT NULL,
 
   PRIMARY KEY (id),
-  FOREIGN KEY (publisher_id) REFERENCES publisher(id)
+  FOREIGN KEY (publisherId) REFERENCES publisher(id)
 );
 
 CREATE TABLE IF NOT EXISTS tag
@@ -31,15 +31,15 @@ CREATE TABLE IF NOT EXISTS tag
   PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS game_tag
+CREATE TABLE IF NOT EXISTS gameTag
 (
   id        SERIAL,
-  game_id   BIGINT  UNSIGNED    NOT NULL,
-  tag_id    BIGINT  UNSIGNED    NOT NULL,
+  gameId   BIGINT  UNSIGNED    NOT NULL,
+  tagId    BIGINT  UNSIGNED    NOT NULL,
 
   PRIMARY KEY (id),
-  FOREIGN KEY (game_id) REFERENCES game(id),
-  FOREIGN KEY (tag_id) REFERENCES tag(id)
+  FOREIGN KEY (gameId) REFERENCES game(id),
+  FOREIGN KEY (tagId) REFERENCES tag(id)
 );
 
 /*************************************/
@@ -52,7 +52,7 @@ VALUES
   ('riot', 88888, '0202020202');
 
 INSERT INTO game
-  (title, price, publisher_id, release_date)
+  (title, price, publisherId, releaseDate)
 VALUES
   ('overwatch', 50, 1, '2021-01-01 00:00:01'),
   ('league of legends', 100, 2, '2021-02-01 00:00:01');
@@ -64,8 +64,8 @@ VALUES
   ('team'),
   ('competition');
 
-INSERT INTO game_tag
-  (game_id, tag_id)
+INSERT INTO gameTag
+  (gameId, tagId)
 VALUES
   (1, 1),
   (1, 2),
