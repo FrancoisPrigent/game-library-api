@@ -23,9 +23,9 @@ services:
       - adminer-database
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${TYPEORM_USERNAME}
+      MYSQL_PASSWORD: ${TYPEORM_PASSWORD}
+      MYSQL_DATABASE: ${TYPEORM_DATABASE}
     volumes:
         - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     restart: always
