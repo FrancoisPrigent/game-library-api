@@ -1,15 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { Game } from './interfaces/game.interface';
+import { Game } from './entities/game.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { classToPlain } from 'class-transformer';
 
 @Injectable()
 export class GamesService {
-  private readonly games: Game[] = [];
+  constructor(
+    @InjectRepository(Game)
+    private gameRepository: Repository<Game>,
+  ) {}
 
-  create(game: Game) {
-    this.games.push(game);
+  async findAll(): Promise<Game[]> {
+    return await this.gameRepository.find({ relations: ['publisher'] });
   }
 
-  findAll(): Game[] {
-    return this.games;
+  async findOne(id: string): Promise<Game> {
+    return await this.gameRepository.findOne(id, { relations: ['publisher'] });
   }
 }
