@@ -8,7 +8,10 @@ The scheduled tasks has been developed as well to delete games or decrease a gam
 You can find the assignment in the doc folder.
 
 ## What's needs to be done
-If you want to contribute, you can:
+I'm running out of time.
+
+TODO list:
+- add tests to db operations
 - implement Exceptions to handle errors
 - add params validators
 - add extra checks before operations in the database
@@ -187,3 +190,6 @@ Expected result for id = 1:
     "affected": 1
 }
 ```
+
+## Scheduled tasks
+To test the tasks, you can post games with different releaseDate values and check the app logs.
