@@ -7,11 +7,15 @@ import {
   Param,
   Post,
   Body,
+  Delete,
+  Patch,
 } from '@nestjs/common';
 import { Game } from './entities/game.entity';
 import { GamesService } from './games.service';
 import { GROUP_GAME, GROUP_PUBLISHER } from './entities/game.entity';
 import { CreateGameDto } from './dto/create-game.dto';
+import { PatchGameDto } from './dto/patch-game.dto';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Controller('games')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -45,5 +49,18 @@ export class GamesController {
   @Post()
   async createGame(@Body() createGameDto: CreateGameDto): Promise<Game> {
     return this.gamesService.insert(createGameDto);
+  }
+
+  @Delete(':id')
+  async deleteGame(@Param('id') id: number): Promise<DeleteResult> {
+    return this.gamesService.delete(id);
+  }
+
+  @Patch(':id')
+  async patchGame(
+    @Param('id') id: number,
+    @Body() patchGameDto: PatchGameDto,
+  ): Promise<UpdateResult> {
+    return this.gamesService.patch(id, patchGameDto);
   }
 }
