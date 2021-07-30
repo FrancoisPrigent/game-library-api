@@ -1,73 +1,189 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Welcome to the Game Library API
 
 ## Description
+This API is able to CRUD games and assign them a publisher.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The scheduled tasks has been developed as well to delete games or decrease a game's price.
 
-## Installation
+You can find the assignment in the doc folder.
 
-```bash
-$ npm install
+## What's needs to be done
+If you want to contribute, you can:
+- implement Exceptions to handle errors
+- add params validators
+- add extra checks before operations in the database
+- add a proper api doc like swagger.
+
+## Run the API
+docker-compose up
+
+## Run the tests
+1 - enter in the api container
+
+> docker container exec -it game-library-api_game-library-api_1 sh
+
+2 - run e2e tests
+> npm run test:e2e
+
+## API DOC
+### Get Health check
+http://localhost:3001/health-check
+
+### Get games
+GET http://localhost:3001/games
+
+Expected result:
+```json
+[
+    {
+        "id": "1",
+        "title": "overwatch",
+        "price": 50,
+        "discount": null,
+        "releaseDate": "2021-01-01T00:00:01.000Z",
+        "publisher": {
+            "id": "1",
+            "name": "ubisoft",
+            "siret": 99999,
+            "phone": "0101010101"
+        }
+    },
+    {
+        "id": "2",
+        "title": "league of legends",
+        "price": 100,
+        "discount": null,
+        "releaseDate": "2021-02-01T00:00:01.000Z",
+        "publisher": {
+            "id": "2",
+            "name": "riot",
+            "siret": 88888,
+            "phone": "0202020202"
+        }
+    }
+]
 ```
 
-## Running the app
+### Get game
+GET http://localhost:3001/games/:id
 
-```bash
-# development
-$ npm run start
+Expected result with id = 1:
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```json
+{
+    "id": "1",
+    "title": "overwatch",
+    "price": 50,
+    "discount": null,
+    "releaseDate": "2021-01-01T00:00:01.000Z",
+    "publisher": {
+        "id": "1",
+        "name": "ubisoft",
+        "siret": 99999,
+        "phone": "0101010101"
+    }
+}
 ```
 
-## Test
+### Get game publisher
+GET http://localhost:3001/games/:id/publisher
 
-```bash
-# unit tests
-$ npm run test
+Expected result with id 1:
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```json
+{
+    "publisher": {
+        "id": "1",
+        "name": "ubisoft",
+        "siret": 99999,
+        "phone": "0101010101"
+    }
+}
 ```
 
-## Support
+### Post game
+POST http://localhost:3001/games
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+BODY
+```json
+{
+    "title": "dbz",
+    "price": 100,
+    "releaseDate": "2021-10-01 00:00:01"
+}
+```
 
-## Stay in touch
+Expected result:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```json
+{}
+```
 
-## License
+### Patch game
+PATCH http://localhost:3001/games/:id
 
-Nest is [MIT licensed](LICENSE).
+BODY
+```json
+{
+    "title": "lara croft",
+    "price": 11,
+    "releaseDate": "2021-02-01 00:00:01"
+}
+```
+
+Expected result for id = 1:
+
+```json
+{
+    "generatedMaps": [],
+    "raw": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "info": "Rows matched: 1  Changed: 1  Warnings: 0",
+        "serverStatus": 2,
+        "warningStatus": 0,
+        "changedRows": 1
+    },
+    "affected": 1
+}
+```
+### Put game publisher
+PUT http://localhost:3001/games/:id/publisher/:publisherId
+
+Expected result for id = 1 and publisherId = 2:
+
+```json
+{
+    "id": "1",
+    "title": "overwatch",
+    "price": 50,
+    "discount": null,
+    "releaseDate": "2021-01-01T00:00:01.000Z",
+    "publisher": {
+        "id": "2",
+        "name": "riot",
+        "siret": 88888,
+        "phone": "0202020202"
+    }
+}
+```
+
+### Delete game
+DELETE http://localhost:3001/games/:id
+
+Expected result for id = 1:
+
+```json
+{
+    "raw": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "info": "",
+        "serverStatus": 2,
+        "warningStatus": 0
+    },
+    "affected": 1
+}
+```
