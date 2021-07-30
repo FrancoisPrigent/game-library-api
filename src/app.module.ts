@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { getConnectionOptions, Connection } from 'typeorm';
 import { AppController } from './app.controller';
 import { GamesModule } from './games/games.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { GamesModule } from './games/games.module';
           autoLoadEntities: true,
         }),
     }),
+    ScheduleModule.forRoot(),
     GamesModule,
   ],
   controllers: [AppController],
