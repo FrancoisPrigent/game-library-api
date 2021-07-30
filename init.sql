@@ -4,7 +4,7 @@
 CREATE TABLE IF NOT EXISTS publisher
 (
   id    SERIAL,
-  name  VARCHAR(100)  NOT NULL,
+  name  VARCHAR(100)  NOT NULL  UNIQUE,
   siret INT           NOT NULL,
   phone VARCHAR(20)   NOT NULL,
 
