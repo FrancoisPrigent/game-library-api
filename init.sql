@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS game
   id            SERIAL,
   title         VARCHAR(100)  NOT NULL,
   price         INT           NOT NULL,
-  publisherId  BIGINT        UNSIGNED    NOT NULL,
+  discount      INT,
+  publisherId   BIGINT        UNSIGNED    NOT NULL,
   releaseDate   TIMESTAMP     NOT NULL,
 
   PRIMARY KEY (id),
