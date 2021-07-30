@@ -21,6 +21,10 @@ export class Game {
 
   @Expose({ groups: [GROUP_GAME] })
   @Column()
+  discount: number;
+
+  @Expose({ groups: [GROUP_GAME] })
+  @Column()
   releaseDate: string;
 
   @Expose({ groups: [GROUP_GAME, GROUP_PUBLISHER] })
