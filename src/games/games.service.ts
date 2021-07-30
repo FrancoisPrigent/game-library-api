@@ -4,12 +4,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CreateGameDto } from './dto/create-game.dto';
 import { PatchGameDto } from './dto/patch-game.dto';
+import { Publisher } from './entities/publisher.entity';
 
 @Injectable()
 export class GamesService {
   constructor(
     @InjectRepository(Game)
     private gameRepository: Repository<Game>,
+    @InjectRepository(Publisher)
+    private publisherRepository: Repository<Publisher>,
   ) {}
 
   async findAll(): Promise<Game[]> {
@@ -31,5 +34,15 @@ export class GamesService {
 
   async patch(id: number, patchGameDto: PatchGameDto): Promise<UpdateResult> {
     return await this.gameRepository.update(id, patchGameDto);
+  }
+
+  async putPublisher(id: number, publisherId: number): Promise<Game> {
+    const game = await this.findOne(id);
+    const publisher = await this.publisherRepository.findOne(publisherId);
+    if (game && publisher) {
+      game.publisher = publisher;
+    }
+
+    return await this.gameRepository.save(game);
   }
 }

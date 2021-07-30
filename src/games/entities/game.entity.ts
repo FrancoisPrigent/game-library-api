@@ -28,6 +28,8 @@ export class Game {
   releaseDate: string;
 
   @Expose({ groups: [GROUP_GAME, GROUP_PUBLISHER] })
-  @ManyToOne(() => Publisher, (publisher) => publisher.games, { cascade: true })
+  @ManyToOne(() => Publisher, (publisher) => publisher.games, {
+    nullable: true,
+  })
   publisher: Publisher;
 }

@@ -9,6 +9,7 @@ import {
   Body,
   Delete,
   Patch,
+  Put,
 } from '@nestjs/common';
 import { Game } from './entities/game.entity';
 import { GamesService } from './games.service';
@@ -62,5 +63,16 @@ export class GamesController {
     @Body() patchGameDto: PatchGameDto,
   ): Promise<UpdateResult> {
     return this.gamesService.patch(id, patchGameDto);
+  }
+
+  @Put(':id/publisher/:publisherId')
+  @SerializeOptions({
+    groups: [GROUP_GAME],
+  })
+  async putGamePublisher(
+    @Param('id') id: number,
+    @Param('publisherId') publisherId: number,
+  ): Promise<Game> {
+    return this.gamesService.putPublisher(id, publisherId);
   }
 }
